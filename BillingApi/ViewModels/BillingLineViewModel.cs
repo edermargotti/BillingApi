@@ -1,14 +1,14 @@
-﻿using System.Text.Json.Serialization;
+﻿using BillingApi.Domain.Models;
+using System.Text.Json.Serialization;
 
-namespace BillingApi.Domain.Models
+namespace BillingApi.ViewModels
 {
-    public class BillingLine
+    public class BillingLineViewModel
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         [JsonPropertyName("productId")]
         public Guid ProductId { get; set; }
-        public Product Product { get; set; }
 
         [JsonPropertyName("description")]
         public string Description { get; set; }
@@ -16,12 +16,12 @@ namespace BillingApi.Domain.Models
         [JsonPropertyName("quantity")]
         public int Quantity { get; set; }
 
+
         [JsonPropertyName("unit_price")]
         public int UnitPrice { get; set; }
 
         [JsonPropertyName("subtotal")]
         public int SubTotal { get; set; }
         public int BillingId { get; set; }
-        public Billing Billing { get; set; }
     }
 }

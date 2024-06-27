@@ -6,9 +6,9 @@ namespace BillingApi.Service.Interfaces
     public interface ICustomerService
     {
         Task<IEnumerable<Customer>> GetCustomers();
-        Task<Customer?> GetCustomer(int idCustomer);
-        Task<int?> PostCustomer(CustomerViewModel customer);
+        Task<Customer?> GetCustomer(Guid idCustomer);
+        Task<Guid?> PostCustomer(CustomerViewModel customer);
         Task PutCustomer(CustomerViewModel customer);
-        Task DeleteCustomer(int id);
+        Task DeleteCustomer(Guid id);
     }
 }

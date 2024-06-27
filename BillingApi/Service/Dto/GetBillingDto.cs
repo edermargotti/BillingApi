@@ -1,16 +1,17 @@
-﻿using System.Text.Json.Serialization;
+﻿using BillingApi.Domain.Models;
+using System.Text.Json.Serialization;
 
-namespace BillingApi.Domain.Models
+namespace BillingApi.Service.Dto
 {
-    public class Billing
+    public class GetBillingDto
     {
-        public int Id { get; set; }
-
         [JsonPropertyName("invoice_number")]
         public string InvoiceNumber { get; set; }
 
-        public Guid CustomerId { get; set; }
+        [JsonPropertyName("customer")]
         public Customer Customer { get; set; }
+
+        [JsonPropertyName("date")]
         public DateTime Date { get; set; }
 
         [JsonPropertyName("due_date")]
@@ -18,9 +19,11 @@ namespace BillingApi.Domain.Models
 
         [JsonPropertyName("total_amount")]
         public int TotalAmount { get; set; }
+
+        [JsonPropertyName("currency")]
         public string Currency { get; set; }
 
         [JsonPropertyName("lines")]
-        public ICollection<BillingLine> BillingLines { get; set; }
+        public List<BillingLine> BillingLines { get; set; }
     }
 }

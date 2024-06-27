@@ -1,5 +1,5 @@
-﻿using BillingApi.Domain.Models;
-using BillingApi.Infra;
+﻿using BillingApi.Data;
+using BillingApi.Domain.Models;
 using BillingApi.Service.Interfaces;
 using BillingApi.ViewModels;
 using Microsoft.EntityFrameworkCore;
@@ -17,19 +17,19 @@ namespace BillingApi.Service.Services
             return await _context.Product.ToListAsync();
         }
 
-        public async Task<Product?> GetProduct(int idProduct)
+        public async Task<Product?> GetProduct(Guid idProduct)
         {
             return await _context.Product.FindAsync(idProduct);
         }
 
-        public async Task<int?> PostProduct(ProductViewModel product)
+        public async Task<Guid?> PostProduct(ProductViewModel product)
         {
             try
             {
                 var productEntity = _utilsService.ConvertToEntity<Product, ProductViewModel>(product);
 
-                _context.Product.Add(productEntity);
-                await _context.SaveChangesAsync();
+                _context.Add(productEntity);
+                _context.SaveChanges();
 
                 return productEntity.Id;
             }
@@ -48,7 +48,7 @@ namespace BillingApi.Service.Services
                 var productEntity = _utilsService.ConvertToEntity<Product, ProductViewModel>(product);
 
                 _context.Entry(productEntity).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
+                _context.SaveChanges();
             }
             catch (Exception ex)
             {
@@ -58,7 +58,7 @@ namespace BillingApi.Service.Services
 
         }
 
-        public async Task DeleteProduct(int id)
+        public async Task DeleteProduct(Guid id)
         {
             try
             {
@@ -66,8 +66,8 @@ namespace BillingApi.Service.Services
                 if (product == null)
                     throw new KeyNotFoundException($"Registro {id} não encontrado.");
 
-                _context.Product.Remove(product);
-                await _context.SaveChangesAsync();
+                _context.Remove(product);
+                _context.SaveChanges();
             }
             catch (Exception ex)
             {

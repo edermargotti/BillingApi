@@ -11,9 +11,13 @@ namespace BillingApi.Controllers
     {
         private readonly ICustomerService _customerService;
 
-        public CustomerController(ICustomerService customerService) => _customerService = customerService;
+        public CustomerController(ICustomerService customerService)
+        {
+            _customerService = customerService;
+        }
 
         [HttpGet]
+        [Route("GetCustomers")]
         [ProducesDefaultResponseType(typeof(List<Customer>))]
         public async Task<ActionResult> GetCustomers()
         {
@@ -33,7 +37,7 @@ namespace BillingApi.Controllers
 
         [HttpGet("{id}")]
         [ProducesDefaultResponseType(typeof(Customer))]
-        public async Task<ActionResult> GetCustomer(int id)
+        public async Task<ActionResult> GetCustomer(Guid id)
         {
             try
             {
@@ -55,8 +59,6 @@ namespace BillingApi.Controllers
         {
             try
             {
-                //return Ok(response);
-
                 var response = await _customerService.PostCustomer(customer);
                 if (response != null)
                     return CreatedAtAction(nameof(GetCustomer), new { id = response }, customer);
@@ -70,7 +72,7 @@ namespace BillingApi.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCustomer(int id, CustomerViewModel customer)
+        public async Task<IActionResult> PutCustomer(Guid id, CustomerViewModel customer)
         {
             try
             {
@@ -88,7 +90,7 @@ namespace BillingApi.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCustomer(int id)
+        public async Task<IActionResult> DeleteCustomer(Guid id)
         {
             try
             {

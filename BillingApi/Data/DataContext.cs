@@ -1,8 +1,9 @@
-﻿using BillingApi.Domain.Models;
+﻿using BillingApi.Data.Mappings;
+using BillingApi.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 
-namespace BillingApi.Infra
+namespace BillingApi.Data
 {
     public class DataContext : DbContext
     {
@@ -20,6 +21,15 @@ namespace BillingApi.Infra
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            #region Mappings
+            
+            modelBuilder.ApplyConfiguration(new CustomerMapping());
+            modelBuilder.ApplyConfiguration(new ProductMapping());
+            modelBuilder.ApplyConfiguration(new BillingMapping());
+            modelBuilder.ApplyConfiguration(new BillingLineMapping());
+
+            #endregion
         }
 
         #region Transactions
@@ -51,6 +61,6 @@ namespace BillingApi.Infra
             }
         }
 
-        #endregion Transactions
+        #endregion
     }
 }

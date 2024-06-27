@@ -30,7 +30,6 @@ namespace BillingApi.Service.Services
 
                 if (entityProperty != null && entityProperty.CanWrite)
                 {
-                    // Obtém o valor da propriedade da viewModel e o define na propriedade correspondente da entidade
                     var value = viewModelProperty.GetValue(viewModel);
                     entityProperty.SetValue(entity, value);
                 }

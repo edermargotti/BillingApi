@@ -1,6 +1,7 @@
 ﻿using BillingApi.Service.Interfaces;
 using BillingApi.Service.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace BillingApi.Infra
 {
@@ -14,12 +15,8 @@ namespace BillingApi.Infra
 
             #region SERVIÇOS
 
-            services.AddScoped<IApiService, ApiService>();
-            services.AddScoped<IBillingService, BillingService>();
-            services.AddScoped<IBillingLineService, BillingLineService>();
-            services.AddScoped<ICustomerService, CustomerService>();
-            services.AddScoped<IProductService, ProductService>();
-            services.AddScoped<IUtilsService, UtilsService>();
+            services.AddScoped(typeof(ICustomerService), typeof(CustomerService));
+            services.AddScoped(typeof(IProductService), typeof(ProductService));
 
             #endregion
         }

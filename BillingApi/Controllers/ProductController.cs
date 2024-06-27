@@ -33,7 +33,7 @@ namespace BillingApi.Controllers
 
         [HttpGet("{id}")]
         [ProducesDefaultResponseType(typeof(Product))]
-        public async Task<ActionResult> GetProduct(int id)
+        public async Task<ActionResult> GetProduct(Guid id)
         {
             try
             {
@@ -55,8 +55,6 @@ namespace BillingApi.Controllers
         {
             try
             {
-                //return Ok(response);
-
                 var response = await _productService.PostProduct(product);
                 if (response != null)
                     return CreatedAtAction(nameof(GetProduct), new { id = response }, product);
@@ -70,7 +68,7 @@ namespace BillingApi.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProduct(int id, ProductViewModel product)
+        public async Task<IActionResult> PutProduct(Guid id, ProductViewModel product)
         {
             try
             {
@@ -88,7 +86,7 @@ namespace BillingApi.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteProduct(int id)
+        public async Task<IActionResult> DeleteProduct(Guid id)
         {
             try
             {
