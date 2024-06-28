@@ -5,13 +5,9 @@ using Microsoft.EntityFrameworkCore.Storage;
 
 namespace BillingApi.Data
 {
-    public class DataContext : DbContext
+    public class DataContext(DbContextOptions<DataContext> options) : DbContext(options)
     {
         private IDbContextTransaction _transaction;
-
-        public DataContext(DbContextOptions<DataContext> options) : base(options)
-        {
-        }
 
         public DbSet<Customer> Customer { get; set; }
         public DbSet<Product> Product { get; set; }

@@ -62,10 +62,7 @@ namespace BillingApi.Service.Services
         {
             try
             {
-                var product = await GetProduct(id);
-                if (product == null)
-                    throw new KeyNotFoundException($"Registro {id} não encontrado.");
-
+                var product = await GetProduct(id) ?? throw new KeyNotFoundException($"Registro {id} não encontrado.");
                 _context.Remove(product);
                 _context.SaveChanges();
             }

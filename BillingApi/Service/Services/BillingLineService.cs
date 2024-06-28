@@ -5,17 +5,11 @@ using BillingApi.ViewModels;
 
 namespace BillingApi.Service.Services
 {
-    public class BillingLineService : IBillingLineService
+    public class BillingLineService(DataContext context,
+                              IUtilsService utilsService) : IBillingLineService
     {
-        private readonly DataContext _context;
-        private readonly IUtilsService _utilsService;
-
-        public BillingLineService(DataContext context,
-                                  IUtilsService utilsService)
-        {
-            _context = context;
-            _utilsService = utilsService;
-        }
+        private readonly DataContext _context = context;
+        private readonly IUtilsService _utilsService = utilsService;
 
         public async Task<int?> PostBillingLine(BillingLineViewModel billingLine)
         {

@@ -1,3 +1,4 @@
+using BillingApi.Configuration;
 using BillingApi.Data;
 using BillingApi.Infra.Extensions;
 
@@ -5,6 +6,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.ConfigureServices(builder.Configuration);
+
+// Jwt Configuration
+builder.Services.ConfigureJwt(builder.Configuration);
+
+// Swagger Configuration
+builder.Services.AddSwaggerConfiguration();
 
 var app = builder.Build();
 

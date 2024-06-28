@@ -3,14 +3,9 @@ using BillingApi.Service.Interfaces;
 
 namespace BillingApi.Service.Services
 {
-    public class ApiService : IApiService
+    public class ApiService(IHttpClientFactory httpClientFactory) : IApiService
     {
-        private readonly IHttpClientFactory _httpClientFactory;
-
-        public ApiService(IHttpClientFactory httpClientFactory)
-        {
-            _httpClientFactory = httpClientFactory;
-        }
+        private readonly IHttpClientFactory _httpClientFactory = httpClientFactory;
 
         public string GetData(string url)
         {

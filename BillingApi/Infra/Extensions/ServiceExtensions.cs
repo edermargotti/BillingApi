@@ -6,6 +6,8 @@ using Polly;
 using BillingApi.Service.Interfaces;
 using BillingApi.Service.Services;
 using BillingApi.Infra.Exceptions;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BillingApi.Infra.Extensions
 {
@@ -21,10 +23,11 @@ namespace BillingApi.Infra.Extensions
             {
                 options.Filters.Add<CustomExceptionFilter>();
             });
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "BillingAPI", Version = "v1" });
-            });
+
+            services.AddAuthorizationBuilder()
+                .AddPolicy("Bearer", new AuthorizationPolicyBuilder()
+                    .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme‌​)
+                    .RequireAuthenticatedUser().Build());
         }
 
         private static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy()
@@ -51,6 +54,8 @@ namespace BillingApi.Infra.Extensions
             app.UseRouting();
 
             app.UseHttpsRedirection();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

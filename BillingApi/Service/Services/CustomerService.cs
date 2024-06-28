@@ -6,17 +6,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BillingApi.Service.Services
 {
-    public class CustomerService : ICustomerService
+    public class CustomerService(DataContext context,
+                           IUtilsService utilsService) : ICustomerService
     {
-        private readonly DataContext _context;
-        private readonly IUtilsService _utilsService;
-
-        public CustomerService(DataContext context,
-                               IUtilsService utilsService)
-        {
-            _context = context;
-            _utilsService = utilsService;
-        }
+        private readonly DataContext _context = context;
+        private readonly IUtilsService _utilsService = utilsService;
 
         public async Task<IEnumerable<Customer>> GetCustomers()
         {
@@ -66,10 +60,7 @@ namespace BillingApi.Service.Services
         {
             try
             {
-                var customer = await GetCustomer(id);
-                if (customer == null)
-                    throw new KeyNotFoundException($"Registro {id} não encontrado.");
-
+                var customer = await GetCustomer(id) ?? throw new KeyNotFoundException($"Registro {id} não encontrado.");
                 _context.Remove(customer);
                 _context.SaveChanges();
             }

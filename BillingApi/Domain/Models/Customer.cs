@@ -15,6 +15,8 @@ namespace BillingApi.Domain.Models
 
         [JsonPropertyName("address")]
         public string Address { get; set; }
+
+        [JsonIgnore]
         public ICollection<Billing> Billing { get; set; }
     }
 }

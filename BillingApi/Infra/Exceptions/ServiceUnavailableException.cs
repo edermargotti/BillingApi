@@ -1,7 +1,6 @@
 ﻿namespace BillingApi.Infra.Exceptions
 {
-    public class ServiceUnavailableException : Exception
+    public class ServiceUnavailableException(string message) : Exception(message)
     {
-        public ServiceUnavailableException(string message) : base(message) { }
     }
 }

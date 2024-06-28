@@ -1,7 +1,6 @@
 ﻿namespace BillingApi.Infra.Exceptions
 {
-    public class ApiException : Exception
+    public class ApiException(string message) : Exception(message)
     {
-        public ApiException(string message) : base(message) { }
     }
 }

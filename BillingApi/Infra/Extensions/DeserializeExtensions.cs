@@ -4,7 +4,7 @@ namespace BillingApi.Infra.Extensions
 {
     public static class DeserializeExtensions
     {
-        private static readonly JsonSerializerOptions defaultSerializerSettings = new JsonSerializerOptions
+        private static readonly JsonSerializerOptions defaultSerializerSettings = new()
         {
             PropertyNameCaseInsensitive = true,
             ReadCommentHandling = JsonCommentHandling.Skip,

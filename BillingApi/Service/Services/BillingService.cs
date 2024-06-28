@@ -8,32 +8,21 @@ using BillingApi.Infra.Extensions;
 
 namespace BillingApi.Service.Services
 {
-    public class BillingService : IBillingService
+    public class BillingService(DataContext context,
+                          IUtilsService utilsService,
+                          IConfiguration configuration,
+                          IApiService apiService,
+                          ICustomerService customerService,
+                          IProductService productService,
+                          IBillingLineService billingLineService) : IBillingService
     {
-        private readonly DataContext _context;
-        private readonly IUtilsService _utilsService;
-        private readonly IConfiguration _configuration;
-        private readonly IApiService _apiService;
-        private readonly ICustomerService _customerService;
-        private readonly IProductService _productService;
-        private readonly IBillingLineService _billingLineService;
-
-        public BillingService(DataContext context, 
-                              IUtilsService utilsService, 
-                              IConfiguration configuration,
-                              IApiService apiService,
-                              ICustomerService customerService,
-                              IProductService productService,
-                              IBillingLineService billingLineService)
-        {
-            _context = context;
-            _utilsService = utilsService;
-            _configuration = configuration;
-            _apiService = apiService;
-            _customerService = customerService;
-            _productService = productService;
-            _billingLineService = billingLineService;
-        }
+        private readonly DataContext _context = context;
+        private readonly IUtilsService _utilsService = utilsService;
+        private readonly IConfiguration _configuration = configuration;
+        private readonly IApiService _apiService = apiService;
+        private readonly ICustomerService _customerService = customerService;
+        private readonly IProductService _productService = productService;
+        private readonly IBillingLineService _billingLineService = billingLineService;
 
         public async Task<IEnumerable<Billing>> GetBillings()
         {
@@ -94,10 +83,7 @@ namespace BillingApi.Service.Services
         {
             try
             {
-                var billing = await GetBilling(id);
-                if (billing == null)
-                    throw new KeyNotFoundException($"Registro {id} não encontrado.");
-
+                var billing = await GetBilling(id) ?? throw new KeyNotFoundException($"Registro {id} não encontrado.");
                 _context.Remove(billing);
                 _context.SaveChanges();
             }

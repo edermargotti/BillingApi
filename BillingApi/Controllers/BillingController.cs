@@ -1,19 +1,16 @@
 ﻿using BillingApi.Infra.Exceptions;
 using BillingApi.Service.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BillingApi.Controllers
 {
     [Route("api/billing")]
     [ApiController]
-    public class BillingController : Controller
+    [Authorize]
+    public class BillingController(IBillingService billingService) : Controller
     {
-        private readonly IBillingService _billingService;
-
-        public BillingController(IBillingService billingService) 
-        {
-            _billingService = billingService;
-        }
+        private readonly IBillingService _billingService = billingService;
 
         [HttpGet]
         [Route("GetAndProcessFirstData")]

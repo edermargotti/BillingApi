@@ -15,9 +15,11 @@ namespace BillingApi.Infra
             #region SERVIÇOS
 
             services.AddScoped<IApiService, ApiService>();
+            services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IBillingService, BillingService>();
             services.AddScoped<IBillingLineService, BillingLineService>();
             services.AddScoped<ICustomerService, CustomerService>();
+            services.AddScoped<IJwtHandler, JwtHandler>();
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IUtilsService, UtilsService>();
 

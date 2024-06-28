@@ -1,17 +1,17 @@
 ﻿using BillingApi.Domain.Models;
 using BillingApi.Service.Interfaces;
 using BillingApi.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BillingApi.Controllers
 {
     [Route("api/product")]
     [ApiController]
-    public class ProductController : ControllerBase
+    [Authorize]
+    public class ProductController(IProductService productService) : ControllerBase
     {
-        private readonly IProductService _productService;
-
-        public ProductController(IProductService productService) => _productService = productService;
+        private readonly IProductService _productService = productService;
 
         [HttpGet]
         [ProducesDefaultResponseType(typeof(List<Product>))]

@@ -1,20 +1,17 @@
 ﻿using BillingApi.Domain.Models;
 using BillingApi.Service.Interfaces;
 using BillingApi.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BillingApi.Controllers
 {
     [Route("api/customer")]
     [ApiController]
-    public class CustomerController : ControllerBase
+    [Authorize]
+    public class CustomerController(ICustomerService customerService) : ControllerBase
     {
-        private readonly ICustomerService _customerService;
-
-        public CustomerController(ICustomerService customerService)
-        {
-            _customerService = customerService;
-        }
+        private readonly ICustomerService _customerService = customerService;
 
         [HttpGet]
         [Route("GetCustomers")]
